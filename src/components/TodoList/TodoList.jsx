@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddTodo from "../AddTodo/AddTodo";
+import { FaTrashAlt } from "react-icons/fa";
 
 export default function TodoList() {
     const [todos, setTodos] = useState([
@@ -9,12 +10,29 @@ export default function TodoList() {
     const handleAdd = (todo) => {
         setTodos([...todos, todo]);
     }
+    const onDelete = (todo) =>{
+        setTodos(todos.filter(val => val!=todo))
+    }
+    const onUpdate = (item) =>{
+        setTodos(todos=> todos.map(todo=>{
+            if(todo==item) {
+                return {...todo, status: todo.status=='active'?'inactive':'active'};
+            }
+            return todo;
+        }))
+    }
 
     return <section>
         <ul>
-            {todos.map((item)=>{
-                return <li key={item.id}>{item.text}</li>
-            })}
+            {todos.map((item)=>(
+                <li key={item.id}>
+                    <input type={"checkbox"} checked={item.status==='inactive'} onClick={()=>onUpdate(item)} /> 
+                    {item.text}
+                    <button onClick={()=>onDelete(item)}>
+                    <FaTrashAlt />
+                    </button>
+                </li>
+            ))}
         </ul>
         <AddTodo onAdd={handleAdd} />
         
