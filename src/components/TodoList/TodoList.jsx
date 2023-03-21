@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import AddTodo from "../AddTodo/AddTodo";
 import Todo from "../Todo/Todo";
 
-export default function TodoList() {
+export default function TodoList({filter}) {
     const [todos, setTodos] = useState([
         {id:'123',text:'장보기',status:'active'},
         {id:'124',text:'공부하기',status:'active'}
     ]);
-    const [status, setStatus] = useState('all');
     const handleAdd = (todo) => {
         setTodos([...todos, todo]);
     }
@@ -17,32 +16,29 @@ export default function TodoList() {
     const handleUpdate = (updated) =>{
         setTodos(todos.map(todo=>(todo.id===updated.id ? updated : todo )))
     }
+    const filtered = getFilteredItems(todos, filter);
 
     return <section>
+        
         <ul>
-            <li>
-                <button onClick={()=>setStatus('all')}>all</button>
-            </li>
-            <li>
-                <button onClick={()=>setStatus('active')}>active</button>
-            </li>
-            <li>
-                <button onClick={()=>setStatus('completed')}>completed</button>
-            </li>
-        </ul>
-        <ul>
-            {todos.map((item)=>(
-                (status==='all' || status==item.status) &&
-                    <Todo 
-                        key={item.id} 
-                        todo={item} 
-                        onUpdate={handleUpdate}
-                        onDelete={handleDelete}
-                    />
+            {filtered.map((item)=>(
+                <Todo 
+                    key={item.id} 
+                    todo={item} 
+                    onUpdate={handleUpdate}
+                    onDelete={handleDelete}
+                />
                 
             ))}
         </ul>
         <AddTodo onAdd={handleAdd} />
         
     </section>;
+}
+
+function getFilteredItems(todos, filter){
+    if(filter==='all'){
+        return todos;
+    }
+    return todos.filter((todo) => todo.status===filter);
 }
