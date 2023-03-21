@@ -1,19 +1,13 @@
 import React, { useState } from "react";
+import AddTodo from "../AddTodo/AddTodo";
 
 export default function TodoList() {
     const [todos, setTodos] = useState([
         {id:'123',text:'장보기',status:'active'},
         {id:'124',text:'공부하기',status:'active'}
     ]);
-    const [input, setInput] = useState('');
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setInput(value);
-    }
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        setTodos([...todos, {id:input,text:input.trim(), status:'active'}]);
-        setInput('');
+    const handleAdd = (todo) => {
+        setTodos([...todos, todo]);
     }
 
     return <section>
@@ -22,9 +16,7 @@ export default function TodoList() {
                 return <li key={item.id}>{item.text}</li>
             })}
         </ul>
-        <form onSubmit={handleSubmit}>
-            <input placeholder="Add Todo" value={input} onChange={handleChange}></input>
-            <button>Add</button>
-        </form>
+        <AddTodo onAdd={handleAdd} />
+        
     </section>;
 }
