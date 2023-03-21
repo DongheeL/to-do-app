@@ -1,6 +1,6 @@
 import './App.css';
 import Note from './components/Note';
-import TodoList from './components/TodoList';
+import TodoList from './components/TodoList/TodoList';
 
 function App() {
   return (
