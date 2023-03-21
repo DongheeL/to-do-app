@@ -7,6 +7,7 @@ export default function TodoList() {
         {id:'123',text:'장보기',status:'active'},
         {id:'124',text:'공부하기',status:'active'}
     ]);
+    const [status, setStatus] = useState('all');
     const handleAdd = (todo) => {
         setTodos([...todos, todo]);
     }
@@ -18,15 +19,27 @@ export default function TodoList() {
     }
 
     return <section>
-       
+        <ul>
+            <li>
+                <button onClick={()=>setStatus('all')}>all</button>
+            </li>
+            <li>
+                <button onClick={()=>setStatus('active')}>active</button>
+            </li>
+            <li>
+                <button onClick={()=>setStatus('completed')}>completed</button>
+            </li>
+        </ul>
         <ul>
             {todos.map((item)=>(
-                <Todo 
-                    key={item.id} 
-                    todo={item} 
-                    onUpdate={handleUpdate}
-                    onDelete={handleDelete}
-                />
+                (status==='all' || status==item.status) &&
+                    <Todo 
+                        key={item.id} 
+                        todo={item} 
+                        onUpdate={handleUpdate}
+                        onDelete={handleDelete}
+                    />
+                
             ))}
         </ul>
         <AddTodo onAdd={handleAdd} />
