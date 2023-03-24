@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { DarkModeContext } from '../../context/DarkModeContext';
 import styles from './AddTodo.module.css'
 
 export default function AddTodo({onAdd}) {
+    const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
     const [input, setInput] = useState('');
     const handleChange = (e) => {
         setInput(e.target.value);
@@ -17,7 +19,7 @@ export default function AddTodo({onAdd}) {
         setInput('');
     }
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={`${styles.form} ${darkMode && styles.darkMode}`} onSubmit={handleSubmit}>
             <input 
                 className={styles.input}
                 placeholder="Add Todo" value={input} onChange={handleChange}/>
