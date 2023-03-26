@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { DarkModeContext } from "../../context/DarkModeContext";
 import AddTodo from "../AddTodo/AddTodo";
 import Todo from "../Todo/Todo";
 import styles from './TodoList.module.css'
@@ -19,9 +18,8 @@ export default function TodoList({filter}) {
         setTodos(todos.map(todo=>(todo.id===updated.id ? updated : todo )))
     }
     const filtered = getFilteredItems(todos, filter);
-    const { darkMode, toggleDarkMode } = useContext(DarkModeContext); 
     return (
-        <section className={`${styles.container} ${darkMode && styles.darkMode}`}>
+        <section className={`${styles.container}`}>
             <ul className={styles.list}>
                 {filtered.map((item)=>(
                     <Todo 

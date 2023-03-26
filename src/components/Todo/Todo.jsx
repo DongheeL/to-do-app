@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 import { FaTrashAlt } from "react-icons/fa";
-import { DarkModeContext } from '../../context/DarkModeContext';
 import styles from './Todo.module.css'
 
 export default function Todo({ todo, onUpdate, onDelete }) {
-    const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
     const {text, status} = todo;
     const handleChange = (e) =>{
         const status = e.target.checked ? 'completed': 'active';
@@ -13,7 +11,7 @@ export default function Todo({ todo, onUpdate, onDelete }) {
     const handleDelete = () =>onDelete(todo);
 
     return (
-        <li className={`${styles.todo} ${darkMode && styles.darkMode}`}>
+        <li className={`${styles.todo} `}>
             <input 
                 className={styles.checkbox}
                 type={"checkbox"} 
