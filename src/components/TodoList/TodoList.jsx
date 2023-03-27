@@ -4,14 +4,8 @@ import Todo from "../Todo/Todo";
 import styles from './TodoList.module.css'
 
 export default function TodoList({filter}) {
-    const [todos, setTodos] = useState([]);
-
-    useEffect(()=>{
-        if(!!localStorage.list){
-            const list = JSON.parse(localStorage.list);
-            setTodos(list);
-        }
-    },[])
+    // useState의 초기값을 전달할 때 일반함수대신 콜백함수로 전달하면, 맨 처음 렌더링될 때만 콜백함수가 호출되고 리렌더링될때에는 호출되지 않으므로 더 효율적이다.
+    const [todos, setTodos] = useState(()=>readTodosFromLocalStorage());
     
     useEffect(()=>{
         if(todos.length>0){
@@ -49,6 +43,11 @@ export default function TodoList({filter}) {
             
         </section>
     );
+}
+
+function readTodosFromLocalStorage(){
+    const list = localStorage.list;
+    return list ? JSON.parse(list) : [];
 }
 
 function getFilteredItems(todos, filter){
