@@ -7,7 +7,7 @@ export default function Header({filters,filter,onFilterChange}) {
     const { darkMode, toggleDarkMode } = useDarkMode();
 
     return (
-        <header className={`${styles.header} ${darkMode && styles.dark}`}>
+        <header className={`${styles.header}`}>
             <button className={styles.filter} onClick={toggleDarkMode}>
                 {darkMode ? <MdLightMode /> : <MdNightlight />}
             </button>
